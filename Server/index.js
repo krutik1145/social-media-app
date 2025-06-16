@@ -28,8 +28,10 @@ app.use(cookieParser());
 
 app.use(cors({
     credentials: true,
-    // origin: 'http://localhost:3000'
-     origin: ["https://social-media-porf523zs-krutik-jains-projects.vercel.app"],
+   
+     origin: [
+        'http://localhost:3000',
+        "https://social-media-porf523zs-krutik-jains-projects.vercel.app"],
 }));
 
 
