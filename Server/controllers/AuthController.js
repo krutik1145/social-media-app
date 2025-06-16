@@ -82,13 +82,17 @@ const loginController = async(req, res) => {
      
        res.cookie('jwt',refreshToken,{
         httpOnly: true,
-        secure: true,
+        // secure: true,
+        //   sameSite: 'None'
+      secure: process.env.NODE_ENV === 'production',  // ✅ only true on deployment
+      sameSite: process.env.NODE_ENV === 'production' ? 'None' : 'Lax',  // ✅ safe on localhost
 
 
        });
 
       return res.send(success(201,{
         accessToken,
+
       }))
 
 

@@ -25,12 +25,11 @@ const app = express();
 app.use(express.json({limit:'20mb'}));
 app.use(morgan('common')); 
 app.use(cookieParser());
-// app.use(cors(
-   
-// ))
+
 app.use(cors({
     credentials: true,
-    origin: 'http://localhost:3000'
+    // origin: 'http://localhost:3000'
+     origin: ["https://social-media-porf523zs-krutik-jains-projects.vercel.app"],
 }));
 
 
