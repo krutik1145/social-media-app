@@ -31,7 +31,7 @@ app.use(cors({
    
      origin: [
         'http://localhost:3000',
-        "https://social-media-porf523zs-krutik-jains-projects.vercel.app"],
+        "https://social-media-app-coral-sigma.vercel.app/"],
 }));
 
 
