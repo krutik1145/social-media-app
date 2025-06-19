@@ -3,7 +3,10 @@ import './UpdateProfile.scss'
 import defaultuserImg from '../../assets/user.jpg'
 import { useSelector, useDispatch } from 'react-redux'
 import { setLoading, updateMyProfile } from '../../redux/slices/appConfigSlice'
-
+import axios from 'axios'
+import { KEY_ACCESS_TOKEN } from '../../utils/localStorageManager'
+import { getItem } from '../../utils/localStorageManager'
+import { useNavigate } from 'react-router-dom'
 const UpdateProfile = () => {
      
     const myProfile = useSelector(state => state.appConfig.myProfile)
@@ -11,20 +14,16 @@ const UpdateProfile = () => {
     const [bio, setBio] = useState('')
     const [userImg, setUserImg] = useState('')
     const dispatch = useDispatch();
-
+    const navigate = useNavigate();
     useEffect(() => {
       setName(myProfile?.name || "")
       setBio(myProfile?.bio || "")
       setUserImg(myProfile?.avatar?.url  )
      }, [myProfile])
-    // console.log('my profile is', myProfile);
 
     function handleImageChange(e){
           const file = e.target.files[0]
-  //          if (!file) {
-  //   // Agar file undefined ya null ho to function return kar de
-  //   return;
-  // }
+
           const fileReader = new FileReader();
           fileReader.readAsDataURL(file);
           fileReader.onload = () =>{
@@ -38,9 +37,7 @@ const UpdateProfile = () => {
     e.preventDefault();
     if (!name || !bio || !userImg) {
       alert("All fields are required.");
-      
-
-      return;
+ return;
       
     }
       dispatch(
@@ -51,6 +48,24 @@ const UpdateProfile = () => {
       })
     );
   } 
+
+  const handleDeleteUser = async () => {
+    const accessToken = getItem(KEY_ACCESS_TOKEN);
+
+    try {
+      const res = await axios.delete("http://localhost:4000/user", {
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+        },
+      });
+
+      console.log("Delete Success:", res.data);
+      localStorage.clear();
+      navigate("/signup");
+    } catch (err) {
+      console.error("Delete error:", err);
+    }
+  };
       
   return ( 
     <div className='Updateprofile'>
@@ -86,7 +101,7 @@ const UpdateProfile = () => {
                         
                   <input type='submit' className='btn-primary' onClick={handleSubmit}/>
                 </form>
-                <button className='delete-account btn-primary'>Delete account</button> 
+                <button className='delete-account btn-primary' onClick={handleDeleteUser}>Delete account</button> 
             </div>
         </div>
       

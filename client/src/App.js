@@ -63,10 +63,10 @@ useEffect(() => {
          </Route>
       </Route>
       
-      {/* <Route element={<OnlyifNotLoggedIn />}> */}
+      <Route element={<OnlyifNotLoggedIn />}>
       <Route path="/login" element = {<Login/> }  />
       <Route path="/signup" element = { <Signup/> }  />
-       {/* </Route> */}
+       </Route>
    
     </Routes>
     </div>
